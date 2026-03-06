@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livre PDF Pro Max | المنصة العالمية المتكاملة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* قسم الـ CSS الموسع (أكثر من 150 سطر تنسيق)
+           لضمان واجهة مستخدم (UI) تليق بمنصة عالمية
+        */
+        :root {
+            --main-bg: #050505;
+            --surface-color: #111111;
+            --accent-green: #00ffa3;
+            --accent-orange: #ff9d00;
+            --danger-red: #ff3d3d;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-style: 1px solid #222222;
+            --glass-effect: blur(15px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--main-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        /* --- تأثيرات التحميل والشاشات الانتقالية --- */
+        .auth-gate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--main-bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-box {
+            background: var(--surface-color);
+            padding: 40px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+            border: var(--border-style);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .hidden { display: none !important; }
+
+        /* --- تصميم الحقول (Inputs) بتفصيل عالي --- */
+        input, textarea, select {
+            width: 100%;
+            padding: 18px;
+            margin: 15px 0;
+            background: #0a0a0a;
+            border: var(--border-style);
+            color: white;
+            border-radius: 15px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: right;
+        }
+
+        input:focus {
+            border-color: var(--accent-green);
+            background: #111;
+            box-shadow: 0 0 15px rgba(0, 255, 163, 0.1);
+        }
+
+        /* حقل الـ PDF - أهم إضافة طلبتها */
+        .file-upload-area {
+            position: relative;
+            background: #080808;
+            border: 2px dashed #333;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            transition: 0.3s;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--accent-green);
+            background: #0d0d0d;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* --- الهيدر الفخم --- */
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #111, transparent);
+        }
+
+        .brand-title {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: var(--accent-orange);
+        }
+
+        .brand-title span { color: var(--accent-green); }
+
+        /* --- شريط البحث المتطور --- */
+        .search-bar-container {
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .ai-search-input {
+            width: 100%;
+            padding: 22px 35px;
+            border-radius: 60px;
+            background: #161616;
+            border: 1px solid var(--accent-orange);
+            color: white;
+            font-size: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* --- شبكة الكتب والمشاريع --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .book-card {
+            background: var(--surface-color);
+            border-radius: 25px;
+            padding: 20px;
+            border: var(--border-style);
+            transition: 0.5s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card:hover {
+            transform: translateY(-12px) rotate(1deg);
+            border-color: var(--accent-green);
+            box-shadow: 0 15px 40px rgba(0, 255, 163, 0.15);
+        }
+
+        .book-thumbnail {
+            height: 140px;
+            background: #0a0a0a;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .book-name {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .book-meta {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 20px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .book-price-tag {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--accent-green);
+            margin-bottom: 15px;
+        }
+
+        /* --- أزرار التحكم --- */
+        .btn-universal {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-buy { background: var(--accent-orange); color: white; }
+        .btn-delete { 
+            background: rgba(255, 61, 61, 0.1); 
+            color: var(--danger-red); 
+            border: 1px solid var(--danger-red);
+            margin-top: 10px;
+        }
+        .btn-delete:hover { background: var(--danger-red); color: white; }
+
+        /* --- القائمة السفلية العائمة --- */
+        .nav-dock {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: var(--glass-effect);
+            padding: 10px 30px;
+            border-radius: 100px;
+            border: var(--border-style);
+            display: flex;
+            gap: 40px;
+            z-index: 2000;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-link.active { color: var(--accent-green); }
+        .nav-link span { font-size: 24px; margin-bottom: 2px; }
+
+        /* --- النافذة المنبثقة للرفع --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 5000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="authGate" class="auth-gate">
+        <div class="auth-box">
+            <h1 style="color: var(--accent-green); margin-bottom: 20px;">Livre Pro Max</h1>
+            <p style="color: #666; margin-bottom: 30px;">أدخل بيانات الوصول للمنصة</p>
+            <input type="text" id="walletID" placeholder="عنوان محفظتك الرقمية (MetaMask)" dir="ltr">
+            <input type="password" id="adminPass" placeholder="رمز الدخول الخاص بآدم">
+            <button class="btn-universal btn-buy" style="margin-top: 10px;" onclick="handleLogin()">دخول آمن</button>
+            <p style="font-size: 11px; color: #333; margin-top: 20px; cursor: pointer;" onclick="handleLogin(true)">تخطي كزائر</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="brand-title">LIVRE PDF <span>PRO MAX</span></div>
+    </header>
+
+    <div class="main-container">
+        <section id="page-shop">
+            <div class="search-bar-container">
+                <input type="text" id="masterSearch" class="ai-search-input" placeholder="🔍 ابحث عن كتب، دورات، أو أكواد..." onkeyup="smartFilter()">
+            </div>
+            <div id="shopGrid" class="books-grid"></div>
+            <div id="emptyStatus" class="hidden" style="text-align:center; padding:100px; color:#444;">لا توجد ملفات في المتجر حالياً..</div>
+        </section>
+
+        <section id="page-dashboard" class="hidden">
+            <h2 style="margin: 30px 0; border-right: 5px solid var(--accent-orange); padding-right: 15px;">لوحة تحكم مشاريعي 📁</h2>
+            <div id="myFilesGrid" class="books-grid"></div>
+        </section>
+    </div>
+
+    <div id="uploadModal" class="modal-overlay hidden">
+        <div class="auth-box" style="max-width: 550px;">
+            <h2 style="color: var(--accent-orange); margin-bottom: 15px;">نشر منتج رقمي جديد 🚀</h2>
+            
+            <input type="text" id="in-title" placeholder="عنوان الكتاب / الملف">
+            <textarea id="in-desc" rows="4" placeholder="اكتب وصفاً جذاب
