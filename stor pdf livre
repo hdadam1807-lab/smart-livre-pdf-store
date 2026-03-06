@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livre PDF Pro Max | النسخة البرومكس الكاملة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- المتغيرات اللونية --- */
+        :root {
+            --pure-black: #000000;
+            --dark-gray: #0d0d0d;
+            --card-surface: #121212;
+            --border-color: #262626;
+            --primary-green: #00ff88;
+            --vibrant-orange: #ff8800;
+            --error-red: #ff4444;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- إعدادات الصفحة الأساسية --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--pure-black);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 90px; /* مساحة للقائمة السفلية */
+        }
+
+        /* --- أنظمة الدخول والتحقق --- */
+        .auth-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--pure-black);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background: var(--card-surface);
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- مدخلات البيانات --- */
+        input, textarea {
+            width: 100%;
+            padding: 16px;
+            margin: 12px 0;
+            background: #1a1a1a;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.1);
+        }
+
+        /* تخصيص خانة رفع الملف لتكون واضحة جداً */
+        input[type="file"] {
+            background: #0a0a0a;
+            border: 2px dashed var(--primary-green);
+            padding: 20px;
+            cursor: pointer;
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        /* --- الأزرار --- */
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-action {
+            background: var(--primary-green);
+            color: #000;
+            padding: 16px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .btn-delete {
+            background: rgba(255, 68, 68, 0.1);
+            color: var(--error-red);
+            padding: 10px;
+            width: 100%;
+            margin-top: 12px;
+            border: 1px solid var(--error-red);
+        }
+
+        /* --- واجهة المتجر --- */
+        header {
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #0d0d0d, transparent);
+        }
+
+        .brand-logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--vibrant-orange);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .brand-logo span {
+            color: var(--primary-green);
+        }
+
+        /* شريط البحث الاحترافي */
+        .search-wrapper {
+            padding: 0 20px 25px 20px;
+        }
+
+        .ai-search {
+            width: 100%;
+            padding: 18px 30px;
+            border-radius: 50px;
+            background: var(--card-surface);
+            border: 1px solid var(--vibrant-orange);
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 4px 20px rgba(255, 136, 0, 0.15);
+        }
+
+        /* شبكة المنتجات */
+        .content-area {
+            padding: 0 20px;
+        }
+
+        .books-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--card-surface);
+            border-radius: 20px;
+            padding: 18px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-5px);
+        }
+
+        .cover-icon {
+            font-size: 50px;
+            text-align: center;
+            margin-bottom: 15px;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .p-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            height: 48px;
+            overflow: hidden;
+        }
+
+        .p-price {
+            color: var(--primary-green);
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .buy-now {
+            background: var(--vibrant-orange);
+            color: white;
+            padding: 12px;
+            width: 100%;
+        }
+
+        /* --- القوائم المنبثقة --- */
+        .overlay-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 5000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- القائمة السفلية الذكية --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(13, 13, 13, 0.95);
+            display: flex;
+            justify-content: space-around;
+            padding: 18px 0;
+            border-top: 1px solid var(--border-color);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-align: center;
+            width: 33%;
+        }
+
+        .nav-btn.active {
+            color: var(--primary-green);
+        }
+
+        .nav-btn i {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="initialAuth" class="auth-screen">
+        <div class="auth-container">
+            <h2 style="color: var(--primary-green); margin-bottom: 10px;">Livre PDF Pro Max</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">نظام إدارة الكتب الرقمية المتطور</p>
+            
+            <div id="login-part-1">
+                <input type="text" id="userWallet" placeholder="أدخل عنوان محفظة MetaMask" dir="ltr">
+                <button class="btn-action" onclick="showSecurityStep()">استمرار</button>
+            </div>
+            
+            <div id="login-part-2" class="hidden">
+                <input type="password" id="adminSecret" placeholder="رمز الأدمين السري">
+                <button class="btn-action" onclick="completeLogin()">دخول النظام</button>
+                <p style="margin-top: 20px; font-size: 12px; color: #444; cursor: pointer;" onclick="completeLogin(true)">تخطي كزائر</p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="brand-logo">LIVRE PDF <span>PRO MAX</span></div>
+    </header>
+
+    <div class="content-area">
+        <div id="view-store">
+            <div class="search-wrapper">
+                <input type="text" id="globalSearch" class="ai-search" placeholder="🔍 ابحث عن أفكار، مشاريع، أو كتب..." onkeyup="executeSearch()">
+            </div>
+            <div id="storeGrid" class="books-layout"></div>
+            <div id="noData" class="hidden" style="text-align:center; padding:50px; color:#333;">المتجر فارغ حالياً..</div>
+        </div>
+
+        <div id="view-management" class="hidden">
+            <h2 style="margin: 20px 0; font-weight: 800; border-right: 4px solid var(--primary-green); padding-right: 15px;">لوحة التحكم الخاصة بك</h2>
+            <div id="myBooksGrid" class="books-layout"></div>
+        </div>
+    </div>
+
+    <div id="uploadForm" class="overlay-modal hidden">
+        <div class="auth-container" style="max-width: 500px;">
+            <h3 style="margin-bottom: 20px; color: var(--vibrant-orange);">رفع منتج رقمي جديد 📤</h3>
+            
+            <input type="text" id="ownerWalletDisplay" readonly style="background: #000; color: #00ff88; font-size: 11px;">
+            <input type="text" id="bookName" placeholder="اسم الكتاب / المشروع">
+            <textarea id="bookDescription" rows="4" placeholder="وصف تفصيلي (لتحسين نتائج البحث الذكي)"></textarea>
+            <input type="number" id="bookPrice" placeholder="السعر المطلوب ($)">
+            
+            <div style="margin-top: 15px; text-align: right;">
+                <label style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px; display: block;">أرفق ملف الـ PDF هنا:</label>
+                <input type="file" id="pdfSource" accept="application/pdf">
+            </div>
+
+            <button class="btn-action" id="publishBtn" onclick="handlePublish()">نشر في المتجر الآن</button>
+            <button onclick="toggleUpload(false)" style="background:none; color:#666; margin-top:15px; width:100%;">إغلاق النافذة</button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button class="nav-btn active" onclick="changeTab('store')"><i>🏠</i>الرئيسية</button>
+        <button class="nav-btn" onclick="toggleUpload(true)" style="background: var(--primary-green); color:#000; border-radius:50px; height:60px; width:60px; margin-top:-30px; box-shadow: 0 10px 20px rgba(0,255,136,0.3);"><i>+</i></button>
+        <button class="nav-btn" onclick="changeTab('manage')"><i>📁</i>مشاريعي</button>
+    </nav>
+
+    <script>
+        /* --- إدارة حالة التطبيق --- */
+        let state = {
+            user: localStorage.getItem('adam_pro_wallet') || '',
+            isAdmin: localStorage.getItem('adam_pro_admin') === 'true',
+            data: JSON.parse(localStorage.getItem('adam_pro_database_v4')) || []
+        };
+
+        /* --- منطق تسجيل الدخول --- */
+        function showSecurityStep() {
+            if(document.getElementById('userWallet').value.length < 10) return alert("المحفظة غير صالحة");
+            document.getElementById('login-part-1').classList.add('hidden');
+            document.getElementById('login-part-2').classList.remove('hidden');
+        }
+
+        function completeLogin(isGuest = false) {
+            if(!isGuest) {
+                state.user = document.getElementById('userWallet').value;
+                if(document.getElementById('adminSecret').value === "ADAM2000") {
+                    state.isAdmin = true;
+                    localStorage.setItem('adam_pro_admin', 'true');
+                }
+                localStorage.setItem('adam_pro_wallet', state.user);
+            }
+            document.getElementById('initialAuth').classList.add('hidden');
+            syncUI();
+        }
+        if(state.user) document.getElementById('initialAuth').classList.add('hidden');
+
+        /* --- التنقل والتبديل --- */
+        function changeTab(tab) {
+            document.getElementById('view-store').classList.toggle('hidden', tab !== 'store');
+            document.getElementById('view-management').classList.toggle('hidden', tab !== 'manage');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            if(tab === 'store') document.querySelector('.nav-btn:nth-child(1)').classList.add('active');
+            if(tab === 'manage') document.querySelector('.nav-btn:nth-child(3)').classList.add('active');
+            syncUI();
+        }
+
+        function toggleUpload(show) {
+            document.getElementById('ownerWalletDisplay').value = "الناشر: " + state.user;
+            document.getElementById('uploadForm').classList.toggle('hidden', !show);
+        }
+
+        /* --- الوظيفة الكبرى: الرفع والتحويل --- */
+        async function handlePublish() {
+            const title = document.getElementById('bookName').value;
+            const desc = document.getElementById('bookDescription').value;
+            const price = document.getElementById('bookPrice').value;
+            const fileInput = document.getElementById('pdfSource');
+
+            if(!title || !price || fileInput.files.length === 0) {
+                return alert("يرجى ملء جميع الخانات واختيار ملف PDF");
+            }
+
+            const file = fileInput.files[0];
+            if(file.size > 5 * 1024 * 1024) return alert("حجم الملف يجب أن يكون أقل من 5 ميجابايت");
+
+            document.getElementById('publishBtn').innerText = "... جاري المعالجة الرقمية";
+            document.getElementById('publishBtn').disabled = true;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                const newEntry = {
+                    id: Date.now(),
+                    title: title,
+                    description: desc,
+                    price: price,
+                    owner: state.user,
+                    fileData: reader.result, // الملف مشفر كـ Base64
+                    fileName: file.name,
+                    timestamp: new Date().toLocaleDateString()
+                };
+
+                state.data.push(newEntry);
+                localStorage.setItem('adam_pro_database_v4', JSON.stringify(state.data));
+                
+                alert("تم إطلاق مشروعك بنجاح في المتجر! 🚀");
+                location.reload();
+            };
+        }
+
+        /* --- العرض والبحث الذكي --- */
+        function syncUI() {
+            renderGrid(state.data, 'storeGrid', false);
+            const myBooks = state.data.filter(b => b.owner === state.user);
+            renderGrid(myBooks, 'myBooksGrid', true);
+            document.getElementById('noData').classList.toggle('hidden', state.data.length > 0);
+        }
+
+        function renderGrid(list, targetId, isControlMode) {
+            const container = document.getElementById(targetId);
+            container.innerHTML = list.map(item => `
+                <div class="product-card">
+                    <div class="cover-icon">📄</div>
+                    <div class="p-title">${item.title}</div>
+                    <div class="p-price">$${item.price}</div>
+                    ${isControlMode ? 
+                        `<button class="btn-delete" onclick="removeItem(${item.id})">حذف المنتج 🗑️</button>` : 
+                        `<button class="buy-now" onclick="downloadProduct(${item.id})">تحميل الآن</button>`
+                    }
+                </div>
+            `).join('');
+        }
+
+        function executeSearch() {
+            const q = document.getElementById('globalSearch').value.toLowerCase();
+            const filtered = state.data.filter(b => 
+                (b.title + b.description).toLowerCase().includes(q)
+            );
+            renderGrid(filtered, 'storeGrid', false);
+        }
+
+        /* --- وظائف الحذف والتحميل --- */
+        function removeItem(id) {
+            if(confirm("هل أنت متأكد من مسح هذا العمل نهائياً؟")) {
+                state.data = state.data.filter(b => b.id !== id);
+                localStorage.setItem('adam_pro_database_v4', JSON.stringify(state.data));
+                syncUI();
+            }
+        }
+
+        function downloadProduct(id) {
+            const item = state.data.find(b => b.id === id);
+            if(!item) return;
+            
+            alert("محاكاة الدفع ناجحة لـ: " + item.title);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = item.fileData;
+            downloadLink.download = item.fileName || "livre_pro_max.pdf";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        // تشغيل ابتدائي
+        syncUI();
+    </script>
+</body>
+</html>
